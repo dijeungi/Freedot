@@ -1,0 +1,44 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        highlight_sql: 'true'
+        format_sql: 'true'
+        use_sql_comments: 'true'
+        show_sql: 'true'
+    hibernate:
+      ddl-auto: update
+    open-in-view: 'false'
+  profiles:
+    active: local
+  application:
+    name: contactdb
+
+logging:
+  level:
+    org:
+      hibernate:
+        orm:
+          jdbc:
+            bind: trace
+        SQL: debug
+      springframework:
+        transaction:
+          interceptor: trace
+        security:
+          nodeValue: debug
+          web: trace
+
+---
+# local 데이터베이스 설정
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/contactdb
+    username: root
+    password: 1234
+
+---
