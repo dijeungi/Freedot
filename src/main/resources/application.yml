@@ -29,6 +29,12 @@ logging:
           nodeValue: debug
           web: trace
 
+server:
+  servlet:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
 ---
 # local 데이터베이스 설정
 spring:
