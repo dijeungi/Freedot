@@ -34,4 +34,13 @@ public class Contact {
   @NotNull
   private String phoneNumber;
 
+  @Column(name = "nickname", nullable = true)
+  private String nickname;
+
+  @Column(name = "email", nullable = true)
+  private String email;
+
+  @Column(name = "address", nullable = true)
+  private String address;
+
 }

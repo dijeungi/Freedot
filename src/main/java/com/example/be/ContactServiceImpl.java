@@ -52,6 +52,9 @@ public class ContactServiceImpl implements ContactService {
 
     existingContact.setName(contactDTO.getName());
     existingContact.setPhoneNumber(contactDTO.getPhoneNumber());
+    existingContact.setEmail(contactDTO.getEmail());
+    existingContact.setAddress(contactDTO.getAddress());
+    existingContact.setNickname(contactDTO.getNickname());
 
     Contact updatedContact = contactRepository.save(existingContact);
     return toDTO(updatedContact);

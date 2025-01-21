@@ -19,6 +19,9 @@ public interface ContactService {
         .id(contactDTO.getId())
         .name(contactDTO.getName())
         .phoneNumber(contactDTO.getPhoneNumber())
+        .nickname(contactDTO.getName())
+        .email(contactDTO.getEmail())
+        .address(contactDTO.getAddress())
         .build();
   }
 
@@ -27,6 +30,9 @@ public interface ContactService {
         .id(contact.getId())
         .name(contact.getName())
         .phoneNumber(contact.getPhoneNumber())
+        .nickname(contact.getName())
+        .email(contact.getEmail())
+        .address(contact.getAddress())
         .build();
   }
 
