@@ -19,7 +19,7 @@ public interface ContactService {
         .id(contactDTO.getId())
         .name(contactDTO.getName())
         .phoneNumber(contactDTO.getPhoneNumber())
-        .nickname(contactDTO.getName())
+        .nickname(contactDTO.getNickname())
         .email(contactDTO.getEmail())
         .address(contactDTO.getAddress())
         .build();
@@ -30,7 +30,7 @@ public interface ContactService {
         .id(contact.getId())
         .name(contact.getName())
         .phoneNumber(contact.getPhoneNumber())
-        .nickname(contact.getName())
+        .nickname(contact.getNickname())
         .email(contact.getEmail())
         .address(contact.getAddress())
         .build();
