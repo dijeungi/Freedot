@@ -1,5 +1,7 @@
-package com.example.be;
+package com.example.be.domain.contact.service;
 
+import com.example.be.domain.contact.dto.ContactDTO;
+import com.example.be.domain.contact.entity.Contact;
 import java.util.List;
 
 public interface ContactService {

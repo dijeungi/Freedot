@@ -1,7 +1,9 @@
-package com.example.be;
+package com.example.be.domain.contact.service;
 
+import com.example.be.domain.contact.dto.ContactDTO;
+import com.example.be.domain.contact.entity.Contact;
+import com.example.be.domain.contact.repository.ContactRepository;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

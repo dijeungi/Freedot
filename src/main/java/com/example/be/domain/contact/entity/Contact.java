@@ -1,4 +1,4 @@
-package com.example.be;
+package com.example.be.domain.contact.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

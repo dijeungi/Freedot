@@ -1,4 +1,4 @@
-package com.example.be;
+package com.example.be.domain.contact.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

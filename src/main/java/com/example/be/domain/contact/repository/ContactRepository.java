@@ -1,8 +1,7 @@
-package com.example.be;
+package com.example.be.domain.contact.repository;
 
-import java.util.List;
+import com.example.be.domain.contact.entity.Contact;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 public interface ContactRepository extends JpaRepository<Contact, Long> {
 

@@ -1,5 +1,7 @@
-package com.example.be;
+package com.example.be.domain.contact.controller;
 
+import com.example.be.domain.contact.service.ContactService;
+import com.example.be.domain.contact.dto.ContactDTO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
