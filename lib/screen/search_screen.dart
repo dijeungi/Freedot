@@ -149,7 +149,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                         child: ListTile(
                           leading: CircleAvatar(
-                            backgroundColor: Colors.blue[300], // 원하는 색상으로 변경
+                            backgroundColor: Colors.blue[200],
                             child: Icon(
                                 Icons.person, color: Colors.white), // 아이콘 추가
                           ),

@@ -33,7 +33,7 @@ class DetailFooter extends StatelessWidget {
             context: context,
             icon: Icons.edit,
             label: '편집',
-            isActive: currentIndex == 0,
+            isActive: false,
             onTap: () async {
               onTap(0);
               final newContact = await Navigator.push(

@@ -13,7 +13,12 @@ class ApiService {
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
-        return data.map((json) => User.fromJson(json)).toList();
+        List<User> contacts = data.map((json) => User.fromJson(json)).toList();
+
+        // 한글 이름 기준으로 정렬
+        contacts.sort((a, b) => a.name.compareTo(b.name));
+
+        return contacts;
       } else {
         print("Error fetching contacts: ${response.statusCode}");
         return null;

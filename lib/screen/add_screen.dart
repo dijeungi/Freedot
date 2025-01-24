@@ -21,7 +21,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false, // 뒤로가기 버튼 없애기
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey[100],
         title: Container(
           padding: EdgeInsets.only(left: 16.0),
           child: Row(
@@ -41,7 +41,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
           ),
         ),
       ),
-
+      backgroundColor: Colors.grey[100],
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -76,7 +76,8 @@ class _AddContactScreenState extends State<AddContactScreen> {
                               children: [
                                 CircleAvatar(
                                   radius: 35,
-                                  child: Icon(Icons.person, size: 45),
+                                  backgroundColor: Colors.blue[200],
+                                  child: Icon(Icons.person, size: 45, color: Colors.white,),
                                 ),
                                 Positioned(
                                   right: 0,
@@ -84,7 +85,8 @@ class _AddContactScreenState extends State<AddContactScreen> {
                                   child: CircleAvatar(
                                     radius: 13,
                                     backgroundColor: Colors.black,
-                                    child: Icon(Icons.add, size: 20, color: Colors.white),
+                                    child: Icon(Icons.add,
+                                        size: 20, color: Colors.white),
                                   ),
                                 ),
                               ],
@@ -130,6 +132,8 @@ class _AddContactScreenState extends State<AddContactScreen> {
                               _isExpanded = false;
                             });
                           },
+                          style: TextButton.styleFrom(
+                              foregroundColor: Colors.black),
                           child: Text('▲ 항목 숨기기'),
                         )
                       else
@@ -139,6 +143,8 @@ class _AddContactScreenState extends State<AddContactScreen> {
                               _isExpanded = true;
                             });
                           },
+                          style: TextButton.styleFrom(
+                              foregroundColor: Colors.black),
                           child: Text('▼ 항목 더보기'),
                         ),
                     ],
@@ -153,13 +159,16 @@ class _AddContactScreenState extends State<AddContactScreen> {
                       Navigator.pop(context);
                     },
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     ),
-                    child: Text('취소',
+                    child: Text(
+                      '취소',
                       style: TextStyle(
                         color: Color(0xFF222222),
                         fontSize: 20,
-                      ),),
+                      ),
+                    ),
                   ),
                   SizedBox(width: 100), // 간격 추가
                   TextButton(
@@ -176,7 +185,8 @@ class _AddContactScreenState extends State<AddContactScreen> {
                         );
 
                         final ApiService apiService = ApiService();
-                        final savedContact = await apiService.createContact(newContact);
+                        final savedContact =
+                            await apiService.createContact(newContact);
 
                         if (savedContact != null) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -192,13 +202,16 @@ class _AddContactScreenState extends State<AddContactScreen> {
                       }
                     },
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     ),
-                    child: Text('저장',
+                    child: Text(
+                      '저장',
                       style: TextStyle(
                         fontSize: 20,
                         color: Color(0xFF222222),
-                      ),),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -220,6 +233,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
         border: Border.all(color: Colors.grey),
+        color: Colors.white
       ),
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: TextFormField(

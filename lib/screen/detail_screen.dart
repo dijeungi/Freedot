@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:contact_hub/services/user.dart';
 import 'package:contact_hub/services/api_service.dart';
 
-import 'package:contact_hub/screen/home_screen.dart';
 import 'package:contact_hub/components/widget/bottom_navigation_bar.dart';
 
 class DetailScreen extends StatelessWidget {
@@ -15,6 +14,9 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.grey[100],
+      ),
       body: Detail(userId: userId),
     );
   }
@@ -55,20 +57,6 @@ class _DetailState extends State<Detail> {
           return Scaffold(
             body: ListView(
               children: [
-                // 화면 상단 뒤로 가기 버튼
-                Container(
-                  padding: EdgeInsets.only(top: 40, left: 16),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.arrow_back, color: Colors.black, size: 28),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/home');
-                        },
-                      ),
-                    ],
-                  ),
-                ),
                 // 메인 카드와 상세 정보
                 Container(
                   width: MediaQuery.of(context).size.width,
