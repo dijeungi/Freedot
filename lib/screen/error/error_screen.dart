@@ -1,32 +1,34 @@
-// error_screen.dart
+// lib/screen/error/error_screen.dart
 import 'package:flutter/material.dart';
-import 'package:contact_hub/components/widget/keypad_footer.dart';
 
-class ErrorScreen extends StatefulWidget {
-  @override
-  _ErrorScreenState createState() => _ErrorScreenState();
-}
-
-class _ErrorScreenState extends State<ErrorScreen> {
-  int _currentIndex = 2;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-    print('Selected Index: $index');
-  }
-
+class ErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-      ),
-      body: Center(child: Text('존재하지 않는 페이지입니다.')),
-      bottomNavigationBar: Footer(
-        currentIndex: _currentIndex,
-        onTap: _onItemTapped,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.error_outline,
+              color: Colors.red,
+              size: 80,
+            ),
+            SizedBox(height: 20),
+            Text(
+              '잘못된 경로로 접근했습니다.',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, '/home');
+              },
+              child: Text('홈으로 돌아가기'),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,61 +1,47 @@
+// lib/screen/add_screen.dart
+
 import 'package:flutter/material.dart';
-import 'package:contact_hub/services/api_service.dart';
+
 import 'package:contact_hub/services/user.dart';
+import 'package:contact_hub/services/api_service.dart';
 
-class EditContact extends StatefulWidget {
-  final int contactId; // 수정할 연락처 ID
-
-  const EditContact({Key? key, required this.contactId}) : super(key: key);
-
+class AddContactScreen extends StatefulWidget {
   @override
-  _EditContactState createState() => _EditContactState();
+  _AddContactScreenState createState() => _AddContactScreenState();
 }
 
-class _EditContactState extends State<EditContact> {
+class _AddContactScreenState extends State<AddContactScreen> {
   final _formKey = GlobalKey<FormState>();
   String _name = '';
   String _phoneNumber = '';
-  String? _nickname;
-  String? _email;
-  String? _address;
   bool _isExpanded = false;
-  bool _isLoading = true; // 데이터 로딩 상태
-  late ApiService apiService;
-
-  @override
-  void initState() {
-    super.initState();
-    apiService = ApiService();
-    _fetchContactData(); // 기존 연락처 데이터를 가져옵니다.
-  }
-
-  Future<void> _fetchContactData() async {
-    final contact = await apiService.fetchContactById(widget.contactId);
-    if (contact != null) {
-      setState(() {
-        _name = contact.name;
-        _phoneNumber = contact.phoneNumber;
-        _nickname = contact.nickname;
-        _email = contact.email;
-        _address = contact.address;
-        _isLoading = false; // 데이터 로딩 완료
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return Scaffold(
-        appBar: AppBar(title: Text('수정 페이지')),
-        body: Center(child: CircularProgressIndicator()), // 로딩 표시
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('수정 페이지'),
+        automaticallyImplyLeading: false, // 뒤로가기 버튼 없애기
+        backgroundColor: Colors.white,
+        title: Container(
+          padding: EdgeInsets.only(left: 16.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.smartphone,
+                size: 24,
+                color: Colors.black, // 아이콘 색상 설정
+              ),
+              SizedBox(width: 8),
+              Text(
+                '휴대전화',
+                style: TextStyle(color: Colors.black),
+              ),
+            ],
+          ),
+        ),
       ),
+
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -92,6 +78,15 @@ class _EditContactState extends State<EditContact> {
                                   radius: 35,
                                   child: Icon(Icons.person, size: 45),
                                 ),
+                                Positioned(
+                                  right: 0,
+                                  bottom: 0,
+                                  child: CircleAvatar(
+                                    radius: 13,
+                                    backgroundColor: Colors.black,
+                                    child: Icon(Icons.add, size: 20, color: Colors.white),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -101,7 +96,6 @@ class _EditContactState extends State<EditContact> {
                       _buildRoundedTextFormField(
                         labelText: '이름',
                         icon: Icons.person,
-                        initialValue: _name,
                         onSaved: (value) {
                           _name = value!;
                         },
@@ -117,7 +111,6 @@ class _EditContactState extends State<EditContact> {
                         labelText: '전화번호',
                         icon: Icons.phone,
                         keyboardType: TextInputType.phone,
-                        initialValue: _phoneNumber,
                         onSaved: (value) {
                           _phoneNumber = value!;
                         },
@@ -162,13 +155,11 @@ class _EditContactState extends State<EditContact> {
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     ),
-                    child: Text(
-                      '취소',
+                    child: Text('취소',
                       style: TextStyle(
                         color: Color(0xFF222222),
                         fontSize: 20,
-                      ),
-                    ),
+                      ),),
                   ),
                   SizedBox(width: 100), // 간격 추가
                   TextButton(
@@ -176,30 +167,26 @@ class _EditContactState extends State<EditContact> {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
 
-                        final updatedContact = User(
-                          id: widget.contactId,
+                        final newContact = User(
                           name: _name,
                           phoneNumber: _phoneNumber,
-                          nickname: _nickname?.isNotEmpty == true ? _nickname : null,
-                          email: _email?.isNotEmpty == true ? _email : null,
-                          address: _address?.isNotEmpty == true ? _address : null,
+                          nickname: null,
+                          email: null,
+                          address: null,
                         );
 
-                        final success = await apiService.updateContact(widget.contactId, updatedContact);
+                        final ApiService apiService = ApiService();
+                        final savedContact = await apiService.createContact(newContact);
 
-                        if (success != null) {
+                        if (savedContact != null) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('연락처가 수정되었습니다.')),
+                            SnackBar(content: Text('연락처가 저장되었습니다.')),
                           );
 
-                          Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              '/home',
-                              (Route<dynamic> route) => false,
-                          );
+                          Navigator.pop(context, savedContact);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('연락처 수정에 실패했습니다.')),
+                            SnackBar(content: Text('연락처 저장에 실패했습니다.')),
                           );
                         }
                       }
@@ -207,13 +194,11 @@ class _EditContactState extends State<EditContact> {
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     ),
-                    child: Text(
-                      '저장',
+                    child: Text('저장',
                       style: TextStyle(
                         fontSize: 20,
                         color: Color(0xFF222222),
-                      ),
-                    ),
+                      ),),
                   ),
                 ],
               ),
@@ -228,7 +213,6 @@ class _EditContactState extends State<EditContact> {
     required String labelText,
     required IconData icon,
     TextInputType? keyboardType,
-    required String initialValue,
     required void Function(String?) onSaved,
     required String? Function(String?) validator,
   }) {
@@ -242,7 +226,6 @@ class _EditContactState extends State<EditContact> {
         style: TextStyle(
           color: Color(0xFF222222),
         ),
-        initialValue: initialValue,
         decoration: InputDecoration(
           labelText: labelText,
           icon: Icon(icon),
@@ -261,9 +244,8 @@ class _EditContactState extends State<EditContact> {
         _buildRoundedTextFormField(
           labelText: '별명',
           icon: Icons.star,
-          initialValue: _nickname ?? '',
           onSaved: (value) {
-            _nickname = value;
+            // 별명 저장 기능 추가
           },
           validator: (value) {
             return null;
@@ -273,9 +255,8 @@ class _EditContactState extends State<EditContact> {
         _buildRoundedTextFormField(
           labelText: '이메일',
           icon: Icons.email,
-          initialValue: _email ?? '',
           onSaved: (value) {
-            _email = value;
+            // 이메일 저장 기능 추가
           },
           validator: (value) {
             return null;
@@ -285,9 +266,8 @@ class _EditContactState extends State<EditContact> {
         _buildRoundedTextFormField(
           labelText: '주소',
           icon: Icons.home,
-          initialValue: _address ?? '',
           onSaved: (value) {
-            _address = value;
+            // 주소 저장 기능 추가
           },
           validator: (value) {
             return null;

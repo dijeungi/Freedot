@@ -1,10 +1,13 @@
-import 'package:contact_hub/screen/add_contact_screen.dart';
-import '../screen/search_screen.dart';
+// lib/screen/home_screen.dart
+
 import 'package:flutter/material.dart';
+
 import 'package:contact_hub/services/api_service.dart';
 import 'package:contact_hub/services/user.dart';
-import '../screen/detail_contact_screen.dart';
-import '../../components/widget/keypad_footer.dart';
+
+import 'package:contact_hub/screen/add_screen.dart';
+import 'package:contact_hub/screen/search_screen.dart';
+import 'package:contact_hub/screen/detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -63,10 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: Footer(
-        currentIndex: _currentIndex,
-        onTap: _onItemTapped,
-      ),
     );
   }
 
@@ -81,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Transform.translate(
             offset: Offset(0, -70),
             child: Text(
-              '전화',
+              '연락처',
               style: TextStyle(
                 fontSize: 40,
                 fontWeight: FontWeight.normal,
@@ -185,12 +184,11 @@ class _HomeScreenState extends State<HomeScreen> {
             future: contactsFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator()); // 로딩 인디케이터
+                return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
-                return Center(child: Text("Error: ${snapshot.error}")); // 에러 메시지
-                return Center(child: Text("Error: ${snapshot.error}")); // 에러 메시지
+                return Center(child: Text("Error: ${snapshot.error}"));
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return Center(child: Text("데이터를 불러오는데 실패하였습니다.")); // 데이터 없음 메시지
+                return Center(child: Text("데이터를 불러오는데 실패하였습니다.", style: TextStyle(color: Colors.grey[400]),));
               } else {
                 final contacts = snapshot.data!;
                 return ListView.separated(
@@ -222,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => DetailContact(
+                            builder: (context) => DetailScreen(
                               userId: contacts[index].id!,
                             ),
                           ),

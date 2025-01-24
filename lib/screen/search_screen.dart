@@ -1,6 +1,9 @@
+// lib/screen/search_screen.dart
+
 import 'package:flutter/material.dart';
+
 import 'package:contact_hub/services/user.dart';
-import '../screen/detail_contact_screen.dart';
+import 'package:contact_hub/screen/detail_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   final Future<List<User>?> contactsFuture;
@@ -170,7 +173,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    DetailContact(userId: item.id!),
+                                    DetailScreen(userId: item.id!),
                               ),
                             );
                           },

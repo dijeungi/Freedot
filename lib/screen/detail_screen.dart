@@ -1,25 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:contact_hub/services/api_service.dart';
-import 'package:contact_hub/services/user.dart';
-import '../screen/main_contact_screen.dart';
-import 'package:contact_hub/components/widget/detail_footer.dart';
+// lib/screen/detail_screen.dart
 
-class DetailContact extends StatelessWidget {
+import 'package:flutter/material.dart';
+
+import 'package:contact_hub/services/user.dart';
+import 'package:contact_hub/services/api_service.dart';
+
+import 'package:contact_hub/screen/home_screen.dart';
+import 'package:contact_hub/components/widget/bottom_navigation_bar.dart';
+
+class DetailScreen extends StatelessWidget {
   final int userId;
-  const DetailContact({super.key, required this.userId});
+  const DetailScreen({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color(0xFFF5F5F5),
-      ),
-      home: Scaffold(
-        body: Detail(userId: userId),
-      ),
-      routes: {
-        '/home': (context) => HomeScreen(),
-      },
+    return Scaffold(
+      body: Detail(userId: userId),
     );
   }
 }
@@ -172,7 +168,7 @@ class _DetailState extends State<Detail> {
                         child: Text(
                           user.nickname != null && user.nickname!.isNotEmpty
                               ? user.nickname!
-                              : '없음',
+                              : '별명',
                           style: TextStyle(
                             color: Color(0xFF222222),
                             fontSize: 16,
@@ -193,7 +189,7 @@ class _DetailState extends State<Detail> {
                         left: 80,
                         top: 310,
                         child: Text(
-                          user.email ?? '없음',
+                          user.email ?? '이메일',
                           style: TextStyle(
                             color: Color(0xFF222222),
                             fontSize: 16,
@@ -214,7 +210,7 @@ class _DetailState extends State<Detail> {
                         left: 80,
                         top: 373,
                         child: Text(
-                          user.address ?? '없음',
+                          user.address ?? '주소',
                           style: TextStyle(
                             color: Color(0xFF222222),
                             fontSize: 16,
@@ -227,12 +223,12 @@ class _DetailState extends State<Detail> {
               ],
             ),
             bottomNavigationBar: DetailFooter(
-              contactId: widget.userId,
-              currentIndex: _currentIndex,
-              onTap: _onItemTapped,
-              onDelete: (int deletedContactId) {
-                Navigator.pushNamed(context, '/home');
-              }
+                contactId: widget.userId,
+                currentIndex: _currentIndex,
+                onTap: _onItemTapped,
+                onDelete: (int deletedContactId) {
+                  Navigator.pushNamed(context, '/home');
+                }
             ),
           );
         }
