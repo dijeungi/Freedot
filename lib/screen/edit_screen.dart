@@ -6,7 +6,7 @@ import 'package:contact_hub/services/user.dart';
 import 'package:contact_hub/services/api_service.dart';
 
 class EditScreen extends StatefulWidget {
-  final int contactId; // 수정할 연락처 ID
+  final int contactId;
 
   const EditScreen({Key? key, required this.contactId}) : super(key: key);
 
@@ -22,14 +22,14 @@ class _EditScreenState extends State<EditScreen> {
   String? _email;
   String? _address;
   bool _isExpanded = false;
-  bool _isLoading = true; // 데이터 로딩 상태
+  bool _isLoading = true;
   late ApiService apiService;
 
   @override
   void initState() {
     super.initState();
     apiService = ApiService();
-    _fetchContactData(); // 기존 연락처 데이터를 가져옵니다.
+    _fetchContactData();
   }
 
   Future<void> _fetchContactData() async {
@@ -41,7 +41,7 @@ class _EditScreenState extends State<EditScreen> {
         _nickname = contact.nickname;
         _email = contact.email;
         _address = contact.address;
-        _isLoading = false; // 데이터 로딩 완료
+        _isLoading = false;
       });
     }
   }
@@ -51,7 +51,8 @@ class _EditScreenState extends State<EditScreen> {
     if (_isLoading) {
       return Scaffold(
         appBar: AppBar(title: Text('수정 페이지')),
-        body: Center(child: CircularProgressIndicator()), // 로딩 표시
+        body: Center(child: CircularProgressIndicator()),
+        backgroundColor: Colors.white,
       );
     }
 
@@ -93,7 +94,22 @@ class _EditScreenState extends State<EditScreen> {
                               children: [
                                 CircleAvatar(
                                   radius: 35,
-                                  child: Icon(Icons.person, size: 45),
+                                  backgroundColor: Colors.blue[200],
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 45,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Positioned(
+                                  right: 0,
+                                  bottom: 0,
+                                  child: CircleAvatar(
+                                    radius: 13,
+                                    backgroundColor: Colors.black,
+                                    child: Icon(Icons.edit,
+                                        size: 15, color: Colors.white),
+                                  ),
                                 ),
                               ],
                             ),
@@ -140,6 +156,8 @@ class _EditScreenState extends State<EditScreen> {
                               _isExpanded = false;
                             });
                           },
+                          style: TextButton.styleFrom(
+                              foregroundColor: Colors.black),
                           child: Text('▲ 항목 숨기기'),
                         )
                       else
@@ -149,6 +167,8 @@ class _EditScreenState extends State<EditScreen> {
                               _isExpanded = true;
                             });
                           },
+                          style: TextButton.styleFrom(
+                              foregroundColor: Colors.black),
                           child: Text('▼ 항목 더보기'),
                         ),
                     ],
@@ -163,7 +183,8 @@ class _EditScreenState extends State<EditScreen> {
                       Navigator.pop(context);
                     },
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     ),
                     child: Text(
                       '취소',
@@ -173,7 +194,7 @@ class _EditScreenState extends State<EditScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 100), // 간격 추가
+                  SizedBox(width: 100),
                   TextButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
@@ -183,12 +204,15 @@ class _EditScreenState extends State<EditScreen> {
                           id: widget.contactId,
                           name: _name,
                           phoneNumber: _phoneNumber,
-                          nickname: _nickname?.isNotEmpty == true ? _nickname : null,
+                          nickname:
+                              _nickname?.isNotEmpty == true ? _nickname : null,
                           email: _email?.isNotEmpty == true ? _email : null,
-                          address: _address?.isNotEmpty == true ? _address : null,
+                          address:
+                              _address?.isNotEmpty == true ? _address : null,
                         );
 
-                        final success = await apiService.updateContact(widget.contactId, updatedContact);
+                        final success = await apiService.updateContact(
+                            widget.contactId, updatedContact);
 
                         if (success != null) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -198,7 +222,7 @@ class _EditScreenState extends State<EditScreen> {
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             '/home',
-                                (Route<dynamic> route) => false,
+                            (Route<dynamic> route) => false,
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -208,7 +232,8 @@ class _EditScreenState extends State<EditScreen> {
                       }
                     },
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     ),
                     child: Text(
                       '저장',

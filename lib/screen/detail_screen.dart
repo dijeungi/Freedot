@@ -9,6 +9,7 @@ import 'package:contact_hub/components/widget/bottom_navigation_bar.dart';
 
 class DetailScreen extends StatelessWidget {
   final int userId;
+
   const DetailScreen({super.key, required this.userId});
 
   @override
@@ -24,6 +25,7 @@ class DetailScreen extends StatelessWidget {
 
 class Detail extends StatefulWidget {
   final int userId;
+
   const Detail({required this.userId});
 
   @override
@@ -44,7 +46,7 @@ class _DetailState extends State<Detail> {
     final apiService = ApiService();
 
     return FutureBuilder<User?>(
-      future: apiService.fetchContactById(widget.userId), // API 호출로 유저 정보 가져옴
+      future: apiService.fetchContactById(widget.userId), // API 호출로 유저 정보 가져오기
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -57,14 +59,12 @@ class _DetailState extends State<Detail> {
           return Scaffold(
             body: ListView(
               children: [
-                // 메인 카드와 상세 정보
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: 800,
                   decoration: BoxDecoration(color: const Color(0xFFF5F5F5)),
                   child: Stack(
                     children: [
-                      // 상단 카드
                       Positioned(
                         left: 0,
                         top: 30,
@@ -79,7 +79,6 @@ class _DetailState extends State<Detail> {
                           ),
                         ),
                       ),
-                      // 상세 정보 카드
                       Positioned(
                         left: 0,
                         top: 210,
@@ -94,7 +93,6 @@ class _DetailState extends State<Detail> {
                           ),
                         ),
                       ),
-                      // 이름
                       Positioned(
                         left: 30,
                         top: 80,
@@ -107,7 +105,6 @@ class _DetailState extends State<Detail> {
                           ),
                         ),
                       ),
-                      // 전화번호
                       Positioned(
                         left: 30,
                         top: 110,
@@ -130,7 +127,6 @@ class _DetailState extends State<Detail> {
                           ),
                         ),
                       ),
-                      // 프로필 아이콘
                       Positioned(
                         right: 53,
                         top: 70,
@@ -140,7 +136,6 @@ class _DetailState extends State<Detail> {
                           color: Colors.blue,
                         ),
                       ),
-                      // 닉네임
                       Positioned(
                         left: 30,
                         top: 245,
@@ -163,7 +158,6 @@ class _DetailState extends State<Detail> {
                           ),
                         ),
                       ),
-                      // 이메일
                       Positioned(
                         left: 30,
                         top: 307.5,
@@ -184,7 +178,6 @@ class _DetailState extends State<Detail> {
                           ),
                         ),
                       ),
-                      // 주소
                       Positioned(
                         left: 30,
                         top: 370,
@@ -216,8 +209,7 @@ class _DetailState extends State<Detail> {
                 onTap: _onItemTapped,
                 onDelete: (int deletedContactId) {
                   Navigator.pushNamed(context, '/home');
-                }
-            ),
+                }),
           );
         }
       },

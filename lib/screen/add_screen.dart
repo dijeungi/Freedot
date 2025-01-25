@@ -20,7 +20,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, // 뒤로가기 버튼 없애기
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.grey[100],
         title: Container(
           padding: EdgeInsets.only(left: 16.0),
@@ -30,7 +30,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
               Icon(
                 Icons.smartphone,
                 size: 24,
-                color: Colors.black, // 아이콘 색상 설정
+                color: Colors.black,
               ),
               SizedBox(width: 8),
               Text(
@@ -77,7 +77,11 @@ class _AddContactScreenState extends State<AddContactScreen> {
                                 CircleAvatar(
                                   radius: 35,
                                   backgroundColor: Colors.blue[200],
-                                  child: Icon(Icons.person, size: 45, color: Colors.white,),
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 45,
+                                    color: Colors.white,
+                                  ),
                                 ),
                                 Positioned(
                                   right: 0,
@@ -85,8 +89,8 @@ class _AddContactScreenState extends State<AddContactScreen> {
                                   child: CircleAvatar(
                                     radius: 13,
                                     backgroundColor: Colors.black,
-                                    child: Icon(Icons.add,
-                                        size: 20, color: Colors.white),
+                                    child: Icon(Icons.edit,
+                                        size: 15, color: Colors.white),
                                   ),
                                 ),
                               ],
@@ -170,7 +174,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 100), // 간격 추가
+                  SizedBox(width: 100),
                   TextButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
@@ -231,10 +235,9 @@ class _AddContactScreenState extends State<AddContactScreen> {
   }) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.0),
-        border: Border.all(color: Colors.grey),
-        color: Colors.white
-      ),
+          borderRadius: BorderRadius.circular(20.0),
+          border: Border.all(color: Colors.grey),
+          color: Colors.white),
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: TextFormField(
         style: TextStyle(
@@ -259,7 +262,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
           labelText: '별명',
           icon: Icons.star,
           onSaved: (value) {
-            // 별명 저장 기능 추가
+            // 별명 저장 기능
           },
           validator: (value) {
             return null;
@@ -270,7 +273,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
           labelText: '이메일',
           icon: Icons.email,
           onSaved: (value) {
-            // 이메일 저장 기능 추가
+            // 이메일 저장 기능
           },
           validator: (value) {
             return null;

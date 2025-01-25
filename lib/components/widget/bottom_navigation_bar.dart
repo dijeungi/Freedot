@@ -42,9 +42,7 @@ class DetailFooter extends StatelessWidget {
                   builder: (context) => EditScreen(contactId: contactId),
                 ),
               );
-              if (newContact != null) {
-                // 편집 후 추가 작업 필요시 여기에 작성
-              }
+              if (newContact != null) {}
             },
           ),
           _buildActionButton(

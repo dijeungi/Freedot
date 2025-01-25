@@ -24,7 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     // 연락처 데이터를 비동기적으로 가져오는 초기화
     // 약간의 딜레이 추가 ( 연락처 추가 후 ㄴ 카테고리를 추가하면 맨 상단에 올라와 있음 방지 )
-    contactsFuture = Future.delayed(Duration(seconds: 1), () => apiService.fetchAllContacts());
+    contactsFuture = Future.delayed(
+        Duration(seconds: 1), () => apiService.fetchAllContacts());
     // contactsFuture = apiService.fetchAllContacts();
   }
 
@@ -132,13 +133,15 @@ class _HomeScreenState extends State<HomeScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween, // 아이콘 간 간격을 조정
       children: [
         // 왼쪽에 햄버거 아이콘
-        IconButton(
-          icon: Icon(Icons.menu),
-          color: Colors.black,
+        Container(
           padding: EdgeInsets.only(left: 16),
-          onPressed: () {
-            // 햄버거 버튼 클릭 시 동작 정의
-          },
+          child: IconButton(
+            icon: Icon(Icons.menu),
+            color: Colors.black,
+            onPressed: () {
+              // 햄버거 버튼 클릭 시 동작 정의
+            },
+          ),
         ),
         Row(
           children: [
@@ -186,7 +189,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
   // 연락처 리스트를 보여주는 위젯
   Widget _buildContactList() {
     return Padding(
@@ -199,7 +201,9 @@ class _HomeScreenState extends State<HomeScreen> {
           } else if (snapshot.hasError) {
             return Center(child: Text("Error: ${snapshot.error}"));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text("데이터를 불러오는데 실패하였습니다.", style: TextStyle(color: Colors.grey[400])));
+            return Center(
+                child: Text("데이터를 불러오는데 실패하였습니다.",
+                    style: TextStyle(color: Colors.grey[400])));
           } else {
             final contacts = snapshot.data!;
             // 초성으로 그룹화
@@ -214,7 +218,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
             return ListView.separated(
               itemCount: groupedContacts.keys.length,
-              separatorBuilder: (context, index) => SizedBox(height: 10), // 그룹 간격
+              separatorBuilder: (context, index) => SizedBox(height: 10),
+              // 그룹 간격
               itemBuilder: (context, index) {
                 String key = groupedContacts.keys.elementAt(index);
                 List<User> group = groupedContacts[key]!;
@@ -224,7 +229,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     // 카테고리 제목
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 20.0),
                       child: Text(
                         key, // 초성 제목
                         style: TextStyle(
@@ -238,7 +244,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(40), bottom: Radius.circular(40)),
+                        borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(40),
+                            bottom: Radius.circular(40)),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.2),
@@ -251,14 +259,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: EdgeInsets.all(10.0), // 내부 여백
                       child: Column(
                         children: group.map((contact) {
-                          bool isLastContact = group.last == contact; // 마지막 프로필 확인
+                          bool isLastContact =
+                              group.last == contact; // 마지막 프로필 확인
 
                           return Column(
                             children: [
                               ListTile(
                                 leading: CircleAvatar(
                                   backgroundColor: Colors.blue[200],
-                                  child: Icon(Icons.person, color: Colors.white), // 프로필 아이콘
+                                  child: Icon(Icons.person,
+                                      color: Colors.white), // 프로필 아이콘
                                 ),
                                 title: Text(
                                   contact.name,
@@ -283,8 +293,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               // 마지막 프로필이 아닐 경우에만 구분선 추가
                               if (!isLastContact)
                                 Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 20.0), // 좌우 여백 설정
-                                  child: Divider( // 구분선 추가
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: 20.0), // 좌우 여백 설정
+                                  child: Divider(
+                                    // 구분선 추가
                                     color: Colors.grey.shade400,
                                     height: 1,
                                     thickness: 1,
@@ -304,8 +316,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-
 
   // 초성을 반환하는 함수
   String getInitialSound(String name) {
@@ -334,9 +344,9 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
 
     int code = name.codeUnitAt(0);
-    if (code < 0xAC00 || code > 0xD7A3) return name[0]; // 한글이 아닌 경우 원래 문자 반환
+    if (code < 0xAC00 || code > 0xD7A3) return name[0];
 
-    int initialIndex = (code - 0xAC00) ~/ 588; // 초성 인덱스 계산
+    int initialIndex = (code - 0xAC00) ~/ 588;
     return initialSounds[initialIndex];
   }
 }
